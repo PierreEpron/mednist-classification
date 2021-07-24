@@ -1,9 +1,5 @@
 import json
-
-from commons import get_model, transform_image
-from PIL import Image
-import torch
-import onnx
+from commons import transform_image
 import os
 import onnxruntime
 
@@ -24,4 +20,4 @@ def get_prediction(image_bytes):
         outputs = ort_outs[0]
     except Exception:
         return 404, 'error'
-    return {imagenet_class_index.get(str(outputs.argmax())),outputs.argmax()}
+    return imagenet_class_index.get(str(outputs.argmax())), outputs.argmax()
