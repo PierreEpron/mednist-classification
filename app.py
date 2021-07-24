@@ -47,6 +47,7 @@ def upload_folder():
 
 
 if __name__ == '__main__':
-    shutil.rmtree(UPLOAD_FOLDER)
+    if os.path.isdir(UPLOAD_FOLDER):
+        shutil.rmtree(UPLOAD_FOLDER)
     os.mkdir(UPLOAD_FOLDER)
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
