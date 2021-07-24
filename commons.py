@@ -1,10 +1,7 @@
 
 import os
 import io
-
-import torchvision.transforms as transforms
 import torchvision as tv
-import torch
 from PIL import Image
 import onnx
 
