@@ -18,6 +18,7 @@ def get_prediction(image_bytes):
         ort_inputs = {ort_session.get_inputs()[0].name: to_numpy(img_y)}
         ort_outs = ort_session.run(None, ort_inputs)
         outputs = ort_outs[0]
-    except Exception:
+    except Exception as e:
+        print(e)
         return 404, 'error'
     return imagenet_class_index.get(str(outputs.argmax())), outputs.argmax()
