@@ -4,7 +4,7 @@ import os
 import onnxruntime
 
 
-model_path = os.path.join('models', 'MedNet.onnx')
+model_path = os.path.join('models', 'model_opti.onnx')
 ort_session = onnxruntime.InferenceSession(model_path)
 imagenet_class_index = json.load(open('imagenet_class_index.json'))
 
@@ -15,6 +15,7 @@ def to_numpy(tensor):
 def get_prediction(image_bytes):
     try:
         img_y = transform_image(image_bytes)
+        print(img_y)
         ort_inputs = {ort_session.get_inputs()[0].name: to_numpy(img_y)}
         ort_outs = ort_session.run(None, ort_inputs)
         outputs = ort_outs[0]

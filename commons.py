@@ -8,7 +8,7 @@ import onnx
 
 def get_model() :
     # Preprocessing: load the ONNX model
-    model_path = os.path.join('models', 'MedNet.onnx')
+    model_path = os.path.join('models', 'model_opti.onnx')
     model = onnx.load(model_path)
     # Check the model
     try:
