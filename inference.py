@@ -15,7 +15,6 @@ def to_numpy(tensor):
 def get_prediction(image_bytes):
     try:
         img_y = transform_image(image_bytes)
-        print(img_y)
         ort_inputs = {ort_session.get_inputs()[0].name: to_numpy(img_y)}
         ort_outs = ort_session.run(None, ort_inputs)
         outputs = ort_outs[0]
