@@ -4,18 +4,21 @@ from flask import Flask, render_template, request, redirect
 import shutil
 from inference import get_prediction
 import glob
+import json
 
 app = Flask(__name__)
 
 UPLOAD_FOLDER = 'static/uploads/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+imagenet_class = json.load(open('imagenet_class_index.json'))
+
 
 
 def read_file(file):
     img_bytes = file.read()
     class_name, class_id = get_prediction(image_bytes=img_bytes)
-    len_glob = len(glob.glob('static/uploads/*.*'))
-    filename = f"{len_glob}_{class_name}_{file.filename.split('/')[-1]}"
+    len_glob = len(glob.glob(f'static/uploads/{class_name}/*.*'))
+    filename = f"{class_name}/{len_glob}_{class_name}_{file.filename.split('/')[-1]}"
     file.seek(0)
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return class_name, class_id, filename
@@ -50,4 +53,6 @@ if __name__ == '__main__':
     if os.path.isdir(UPLOAD_FOLDER):
         shutil.rmtree(UPLOAD_FOLDER)
     os.mkdir(UPLOAD_FOLDER)
+    for id in imagenet_class:
+        os.mkdir(os.path.join(UPLOAD_FOLDER, imagenet_class[id]))
     app.run(debug=True, port=int(os.environ.get('PORT', 5000)))
