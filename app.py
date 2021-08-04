@@ -39,12 +39,18 @@ def upload_folder():
             print('redirection - pas de filename dans folder')
             return redirect('/')
         result = []
+        result_count = {}
         for file in files:
             class_name, class_id, filename = read_file(file)
             if class_name == 404:
                 return redirect('/')
+            if class_name in result_count:
+                result_count[class_name] += 1
+            else:
+                result_count[class_name] = 1
             result.append({'class_name': class_name, 'class_id': class_id, 'filename': filename})
-        return render_template('result.html', data=result)
+        print(result_count)
+        return render_template('result.html', data=result, count=result_count)
     return redirect('/')
 
 

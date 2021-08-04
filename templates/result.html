@@ -4,6 +4,18 @@
 {% block content %}
 
 <form class="form-signin" method=post enctype=multipart/form-data>
+  <div class="text-center">
+  {% if count %}
+  {% set length_count = count|length %}
+    {% for x in count %}
+      {% if loop.index == 1 %}
+        <i>{{x}} : {{count[x]}} </i>
+      {% else %}
+        <i>| {{x}} : {{count[x]}} </i>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  </div>
   <div class="row row-cols-6 align-items-center gy-4 mt-3">
     {% if data %}
     {% for item in data %}
