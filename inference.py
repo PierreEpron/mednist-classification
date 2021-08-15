@@ -4,7 +4,7 @@ import os
 import onnxruntime
 
 
-model_path = os.path.join('models', 'model_opti.onnx')
+model_path = os.path.join('models', 'MedNet.onnx')
 ort_session = onnxruntime.InferenceSession(model_path)
 imagenet_class_index = json.load(open('imagenet_class_index.json'))
 
