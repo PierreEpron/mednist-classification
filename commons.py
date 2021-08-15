@@ -4,7 +4,8 @@ import io
 import torchvision as tv
 from PIL import Image
 import onnx
-
+from skimage.transform import resize
+import numpy as np
 
 def get_model() :
     # Preprocessing: load the ONNX model
@@ -21,6 +22,9 @@ def get_model() :
 
 def transform_image(image_bytes) : 
     img = Image.open(io.BytesIO(image_bytes))
+    a = np.asarray(img)
+    if a.shape[0] != 64 or a.shape[1] != 64:
+        img = Image.fromarray(resize(a, (64, 64), preserve_range=True))
     img_y = scaleImage(img)
     img_y.unsqueeze_(0)
     return img_y
