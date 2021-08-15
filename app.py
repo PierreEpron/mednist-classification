@@ -49,7 +49,6 @@ def upload_folder():
             else:
                 result_count[class_name] = 1
             result.append({'class_name': class_name, 'class_id': class_id, 'filename': filename})
-        print(result_count)
         return render_template('result.html', data=result, count=result_count)
     return redirect('/')
 
